@@ -1,4 +1,4 @@
-package com.example.demo.Filter;
+package com.example.demo.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,8 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
         String role = jwtService.extractRole(token);
-
-        System.out.println("Extracted role: " + role);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UsernamePasswordAuthenticationToken authToken =

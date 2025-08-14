@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,20 +9,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/public/auth")
 public class RegisterController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public RegisterController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    @PostMapping("/register")
+    @PostMapping("/api/public/register")
     public String register(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            return "El usuario ya existe";
+            return "User already exists";
         }
         user.setId(null);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "Usuario registrado exitosamente";
+        return "User registered successfully";
     }
 }

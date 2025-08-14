@@ -15,8 +15,8 @@ public class SwaggerConfig {
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API de Productos y Categorías")
-                        .description("Documentación de la API REST con Spring Boot, JPA y MySQL")
+                        .title("Products and Categories API")
+                        .description("REST API documentation with Spring Boot, JPA and MySQL")
                         .version("v1.0"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
@@ -25,9 +25,9 @@ public class SwaggerConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
-                                        .description("Ingrese el token JWT")))
+                                        .description("Enter JWT token")))
                 .externalDocs(new ExternalDocumentation()
-                        .description("Documentación completa")
-                        .url("https://github.com/tu-proyecto"));
+                        .description("Complete documentation")
+                        .url("https://github.com/ccarcey/demo-springboot"));
     }
 }

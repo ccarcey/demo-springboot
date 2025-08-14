@@ -23,16 +23,11 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        System.out.println("Password recibido: " + password);
-        System.out.println("Password almacenado: " + user.getPassword());
-        System.out.println("Rol del usuario: " + user.getRole());
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            System.out.println("No coincide el password");
             throw new RuntimeException("Credenciales inválidas");
         }
 
-        Role role = Role.valueOf(user.getRole().toString());
+        Role role = Role.valueOf(user.getRole());
         return jwtService.generateToken(user.getUsername(), role);
     }
 }

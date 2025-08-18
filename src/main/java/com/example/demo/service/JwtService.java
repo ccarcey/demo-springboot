@@ -4,8 +4,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Role;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -14,13 +12,13 @@ import java.util.Map;
 public class JwtService {
 
     private static final String SECRET_KEY = "estaesunallavesecretalargaparajwt123456";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60;
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String username, Role role) {
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
                 .addClaims(Map.of("role", role))

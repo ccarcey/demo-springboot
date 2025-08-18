@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     private final CategoryService service;
@@ -30,18 +30,17 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category save(@RequestBody Category category) {
-        return service.save(category);
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        // Ensure ID is null for new entities
+        category.setId(null);
+        Category savedCategory = service.save(category);
+        return ResponseEntity.ok(savedCategory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
-        return service.getById(id)
-                .map(c -> {
-                    c.setName(category.getName());
-                    return ResponseEntity.ok(service.save(c));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        Category updatedCategory = service.update(id, category);
+        return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/{id}")

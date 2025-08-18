@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +26,7 @@ public class AuthService {
             throw new RuntimeException("Credenciales inválidas");
         }
 
-        Role role = Role.valueOf(user.getRole());
-        return jwtService.generateToken(user.getUsername(), role);
+        User.Role role = user.getRole();
+        return jwtService.generateToken(user.getUsername(), role.toString());
     }
 }

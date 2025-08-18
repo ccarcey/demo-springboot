@@ -2,8 +2,15 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "categories")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -11,11 +18,9 @@ public class Category {
     private Long id;
 
     private String name;
-
+    
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
-
-    public Category() {}
 
     public Category(String name) {
         this.name = name;
